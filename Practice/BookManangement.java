@@ -192,19 +192,30 @@ public class BookManangement {
     }
 
     public static void statisticByAuthor() {
-        boolean[] counted = new boolean[currentIndex];
+        String[] authorBooks = new String[100];
+        int indexAuthor = 0;
         for (int i = 0; i < currentIndex; i++) {
-            if (!counted[i]) {
-                String author = books[i].getAuthor();
-                int count = 1;
-                for (int j = i + 1; j < currentIndex; j++) {
-                    if (books[j].getAuthor().equals(author)) {
-                        count++;
-                        counted[j] = true;
-                    }
+            boolean exists = false;
+            for (int j = 0; j < indexAuthor; j++) {
+                if (books[i].getAuthor().equals(authorBooks[j])) {
+                    exists = true;
+                    break;
                 }
-                System.out.println("Tác giả " + author + " có " + count + " quyển sách.");
             }
+            if (!exists) {
+                authorBooks[indexAuthor] = books[i].getAuthor();
+                indexAuthor++;
+            }
+        }
+
+        for (int i = 0; i < indexAuthor; i++) {
+            int count = 0;
+            for (int j = 0; j < currentIndex; j++) {
+                if (authorBooks[i].equals(books[j].getAuthor())) { 
+                    count++;
+                }
+            }
+            System.out.println("Tác giả " + authorBooks[i] + " có " + count + " sách.");
         }
     }
 }
